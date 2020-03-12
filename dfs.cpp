@@ -1,0 +1,67 @@
+#include<iostream>
+#include<list>
+using namespace std;
+class Graph{
+	int V;
+	list<int> *adj;
+	void DFSutil(int v, bool visited[]);
+	public:
+		Graph(int V);
+		void addEdge(int v, int w);
+		void DFS(int v);
+};
+Graph ::Graph(int V){
+	this->V=V;
+	adj=new list<int>[V];
+}
+void Graph::addEdge(int v,int w){
+	adj[v].push_back(w);
+}
+void Graph::DFS(int v){
+	bool * visited= new bool[V];
+	for(int i=0;i<V;i++)
+	visited[i]=false;
+	DFSutil(v,visited);
+	}
+void Graph::DFSutil(int v,bool visited[]){
+//	list <int> queue;
+	visited[v]=true;
+		cout<<v<<" ";
+//	queue.push_back(s);
+	list<int>::iterator i;
+//	while(!queue.empty()){
+//		s=queue.front();
+	
+	//	queue.pop_front();
+		for(i=adj[v].begin();i!=adj[v].end();++i){
+			if(!visited[*i]){
+				//visited[*i]=true;
+			//	queue.push_back(*i);
+			DFSutil(*i,visited);
+			}
+		} 
+//	}
+}
+int main(){
+	Graph g(6);
+	g.addEdge(1,2);
+	g.addEdge(1,3);
+	g.addEdge(2,5);
+	g.addEdge(2,4);
+	g.addEdge(3,5);
+	g.addEdge(4,5);
+	g.addEdge(4,6);
+	g.addEdge(5,6);
+	g.addEdge(4,2);
+/*	g.addEdge(6,4);
+	g.addEdge(6,5);
+	g.addEdge(5,4);
+	g.addEdge(5,2);
+	g.addEdge(5,3);
+*///	g.addEdge(3,1);
+
+	
+	cout<<" BFS traversal\n";
+	g.DFS(1);
+	
+}
